@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Tvm Test</string>
+    <string-array name="model">
+        <item>box_fp16</item>
+        <item>digits_fp16</item>
+        <item>yolov8n-fp32-price</item>
+        <item>yolov8n-fp16-price</item>
+        <item>yolo5n-sku110k-1024</item>
+        <item>yolo5s_sku110k_1024</item>
+    </string-array>
+
+    <string-array name="delegate">
+        <item>gpu</item>
+        <item>cpu</item>
+    </string-array>
+</resources>
