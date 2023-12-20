@@ -38,6 +38,13 @@ android {
         dataBinding = false
         viewBinding = true
     }
+    ndkVersion = "25.1.8937393"
+    externalNativeBuild {
+        cmake {
+            version = "3.22.1"
+        }
+    }
+
 }
 
 dependencies {
