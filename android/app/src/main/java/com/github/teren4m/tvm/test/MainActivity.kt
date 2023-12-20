@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.github.teren4m.tvm.test.databinding.ActivityMainBinding
 import com.github.teren4m.tvm.test.image.ImageConverter
 import com.github.teren4m.tvm.test.model.DisplayConfig
+import com.github.teren4m.tvm.test.tvm.TvmUtils
 import com.github.teren4m.tvm.test.utils.CameraProcess
 import com.markodevcic.peko.PermissionRequester
 import com.markodevcic.peko.PermissionResult
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity(), ImageAnalysis.Analyzer {
         CameraProcess(
             this@MainActivity, this@MainActivity, binding.cameraPreviewWrap
         )
+    }
+
+    private val tvmUtils by lazy {
+        TvmUtils(imageConverter)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,10 +91,10 @@ class MainActivity : AppCompatActivity(), ImageAnalysis.Analyzer {
     override fun analyze(image: ImageProxy) {
         lifecycleScope.launch {
             withContext(Dispatchers.Default){
-                val bitmap = imageConverter.toBitmap(image)
-                viewModel.imageChannel.update(bitmap)
+                val imgArray = tvmUtils.getFrame(image)
+                viewModel.update(imgArray)
+                image.close()
             }
-            image.close()
         }
     }
 

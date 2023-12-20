@@ -1,5 +1,6 @@
 package com.github.teren4m.tvm.test.utils.channel
 
+import android.util.Log
 import com.github.teren4m.tvm.test.utils.Optional
 import com.github.teren4m.tvm.test.utils.Optional.None
 import com.github.teren4m.tvm.test.utils.toOptional
@@ -14,15 +15,17 @@ class DataChannel<T> {
     private val dataFlow = MutableStateFlow<Optional<T>>(None)
 
     @Suppress("UNCHECKED_CAST")
-    val flow: Flow<T> = dataFlow.asStateFlow().filterIsInstance(Optional.Some::class)
+    val flow: Flow<T> = dataFlow.asStateFlow()
+        .filterIsInstance(Optional.Some::class)
         .map { it.x as T }
 
     suspend fun update(data: T) {
         dataFlow.update {
-            when (it) {
+            val newData = when (it) {
                 None -> data
                 is Optional.Some -> onDataUpdate(it.x, data)
             }.toOptional()
+            newData
         }
     }
 
