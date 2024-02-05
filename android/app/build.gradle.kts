@@ -53,6 +53,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.markodevcic:peko:3.0.4")
     implementation("com.google.guava:guava:32.1.3-android")
+    implementation("org.tensorflow:tensorflow-lite-support:0.4.4")
 }
 
 kapt {
